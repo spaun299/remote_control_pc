@@ -1,0 +1,12 @@
+LABEL_NOTIFICATION_TEXT = "Your computer will be restarted in %s "
+DATE_AT = 'at'
+DATE_AFTER = 'after'
+USER_NAME = 'user_name'
+USER_PASSWORD = 'user_password'
+TIMER_AFTER_TIME = 'timer_after_time'
+TIMER_AT_DATETIME = 'timer_at_datetime'
+TIMER_AFTER_ACTION = 'timer_after_action'
+TIMER_AT_ACTION = 'timer_at_action'
+APP_VERSION = 'app_version'
+TIMER_AFTER = 'timer_after'
+NOTIFICATION = 'notification'
