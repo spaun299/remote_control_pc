@@ -56,6 +56,7 @@ class Callback(object):
         logging.debug('started')
 
     def connect_thead_signals(self):
+        logging.debug('Connecting thread signals')
         self.widget.notification_signal.connect(
             self.widget.label_notification.setText)
         self.widget.timer_after_signal.connect(
@@ -65,6 +66,9 @@ class Callback(object):
         self.widget.closeEvent = self.on_close_event
 
     def start_timer(self, event, when, action):
+        logging.debug('Starting %s timer.\n'
+                      'Timeout date time: %s.\n'
+                      'Action: %s' % (event, when, action))
         canceled = False
         time_started = int(time.time())
         if event == constants.DATE_AFTER:

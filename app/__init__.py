@@ -13,6 +13,7 @@ import logging.handlers
 
 def main():
     configure_logging()
+    logging.debug('Starting application...')
     app = QApplication(sys.argv)
     check_and_create_necessarry_files_and_folders()
     shelve_necessarry_fields()
@@ -60,7 +61,10 @@ def shelve_necessarry_fields():
               constants.TIMER_AFTER_TIME, constants.TIMER_AT_ACTION,
               constants.TIMER_AT_DATETIME, constants.USER_NAME,
               constants.USER_PASSWORD]
+    logging.debug('Checking necessary shelve fields.\n'
+                  'Necessary fields: %s', ','.join(fields))
     shelve_dict = shelve_get_dict()
     for field in fields:
         if field not in shelve_dict:
-            shelve_save(field=None)
+            logging.debug('Shelve field %s not exists. Set as None' % field)
+            shelve_save(**{field: None})
