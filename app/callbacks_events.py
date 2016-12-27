@@ -5,6 +5,7 @@ import threading
 import time
 import utils
 from app import constants
+import logging
 
 
 class Callback(object):
@@ -52,6 +53,7 @@ class Callback(object):
         self.widget.action_at_cancel.clicked.connect(
             lambda: self.on_click_cancel_timer(event=constants.DATE_AT)
         )
+        logging.debug('started')
 
     def connect_thead_signals(self):
         self.widget.notification_signal.connect(

@@ -4,17 +4,39 @@ import os
 import sys
 from utils import documents_folder, get_folder_path_in_documents, \
     shelve_get_dict, shelve_save
-from config import shelve_file_name
+from config import shelve_file_name, debug, log_name, logger_backup_count, \
+    logger_max_bytes
 from app import constants
+import logging
+import logging.handlers
 
 
 def main():
+    configure_logging()
     app = QApplication(sys.argv)
     check_and_create_necessarry_files_and_folders()
     shelve_necessarry_fields()
     form = MainWindow()
     form.show()
     app.exec_()
+
+
+def configure_logging():
+    """ configure logger for application """
+    try:
+        logging.basicConfig(
+                            format='%(asctime)s %(levelname)-8s %(message)s',
+                            datefmt='%Y/%m/%d %H:%M:%S',
+                            level=logging.DEBUG if debug else logging.ERROR,
+                            handlers=[logging.handlers.RotatingFileHandler(
+                                filename='%s/%s' % (
+                                    get_folder_path_in_documents(),
+                                    log_name),
+                                maxBytes=logger_max_bytes,
+                                backupCount=logger_backup_count
+                            )])
+    except FileNotFoundError:
+        check_and_create_necessarry_files_and_folders()
 
 
 def check_and_create_necessarry_files_and_folders():
