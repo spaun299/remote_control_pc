@@ -150,6 +150,7 @@ class Callback(object):
             self.widget.action_after_time.setDisabled(disabled)
 
     def show_time_to_action(self, days_time_to_action):
+        print(days_time_to_action)
         hrs, mins = [int(val) for val in
                      days_time_to_action.split(
                          ':')[:-1][-2:]]
@@ -189,8 +190,8 @@ class Callback(object):
                                utils.get_future_date_from_time(
                                    hours, minutes,
                                    tm_format='%m/%d/%y %H:%M %S'),
-                               self.widget.action_after_select.currentText())
-                         ).start()
+                               self.widget.action_after_select.currentText()),
+                         daemon=True).start()
 
     def on_click_at_submit(self):
         print(self.widget.sender().text())
@@ -200,8 +201,8 @@ class Callback(object):
         threading.Thread(target=self.start_timer,
                          args=(constants.DATE_AT,
                                self.widget.action_at_datetime.text(),
-                               self.widget.action_at_select.currentText())
-                         ).start()
+                               self.widget.action_at_select.currentText()),
+                         daemon=True).start()
 
     def on_click_contribute(self):
         print(self.widget.action_contribute.text())

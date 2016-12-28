@@ -1,10 +1,12 @@
 from .base_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow
+from PyQt5.QtWidgets import QMainWindow, QSystemTrayIcon, QMenu
 from .callbacks_events import Callback
 from PyQt5.QtCore import Qt, pyqtSignal, QDateTime, QTime, QTimer
+from PyQt5 import QtGui
 import config
 import datetime
-from utils import shelve_get, seconds_from_datetime, shelve_save
+from utils import shelve_get, seconds_from_datetime, shelve_save, \
+    format_hours_minutes_from_seconds
 from app import constants
 import threading
 import time
@@ -21,6 +23,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.setup_app()
         self.callbacks = Callback(self)
         self.on_run_app()
+        tray_icon = SystemTray(self)
+        tray_icon.show()
 
     def setup_app(self):
         logging.debug('Setting up UI application...')
@@ -44,17 +48,16 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         logging.debug('Getting values from shelve for timers')
         timer_at = shelve_get(constants.TIMER_AT_DATETIME)
         timer_after = shelve_get(constants.TIMER_AFTER_TIME)
+        time_now = time.time()
         if timer_at:
             logging.debug('At timer exists in shelve file. \n'
                           'Timer at time: %s' % timer_at)
-            if seconds_from_datetime(timer_at) > time.time():
-                self.callbacks.show_time_to_action(timer_at)
-                logging.debug('Starting at timer gotten from shelve' %
-                              timer_at)
+            if seconds_from_datetime(timer_at) > time_now:
+                logging.debug('Starting at timer gotten from shelve')
                 threading.Thread(target=self.callbacks.start_timer,
                                  args=(constants.DATE_AT, timer_at,
-                                       shelve_get(constants.TIMER_AT_ACTION))
-                                 ).start()
+                                       shelve_get(constants.TIMER_AT_ACTION)),
+                                 daemon=True).start()
                 self.callbacks.set_disabled_timer(constants.DATE_AT)
 
             else:
@@ -63,19 +66,36 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                constants.TIMER_AT_ACTION: None})
         if timer_after:
             logging.debug('After timer exists in shelve file. \n'
-                          'Timer after time: %s' % timer_at)
+                          'Timer after time: %s' % timer_after)
             if seconds_from_datetime(timer_after,
                                      tm_format='%m/%d/%y %H:%M %S') > \
                     time.time():
-                logging.debug('Starting after timer gotten from shelve' %
-                              timer_after)
+                seconds_to_action = seconds_from_datetime(
+                    timer_after, tm_format='%m/%d/%y %H:%M %S') - time_now
+                days_time_to_action = format_hours_minutes_from_seconds(
+                    seconds_to_action)
+                self.callbacks.show_time_to_action(days_time_to_action)
+                logging.debug('Starting after timer gotten from shelve')
                 threading.Thread(target=self.callbacks.start_timer,
                                  args=(constants.DATE_AFTER, timer_after,
                                        shelve_get(
-                                           constants.TIMER_AFTER_ACTION))
-                                 ).start()
+                                           constants.TIMER_AFTER_ACTION)),
+                                 daemon=True).start()
                 self.callbacks.set_disabled_timer(constants.DATE_AFTER)
             else:
                 logging.debug('Setting timer after to shelve as None')
                 shelve_save(**{constants.TIMER_AFTER_TIME: None,
                                constants.TIMER_AFTER_ACTION: None})
+
+
+class SystemTray(QSystemTrayIcon):
+
+    def __init__(self, parent=None):
+        self.icon = QtGui.QIcon("app/static/icon.png")
+        QSystemTrayIcon.__init__(self, self.icon, parent)
+        menu = QMenu(parent)
+        def test():
+            exit()
+
+        tray_exit = menu.addAction("Exit", test)
+        self.setContextMenu(menu)
