@@ -4,6 +4,7 @@ import shelve
 import os
 import config
 import logging
+import webbrowser
 
 
 def documents_folder():
@@ -88,3 +89,6 @@ def get_future_date_from_time(hours, minutes, tm_format='%m/%d/%y %H:%M'):
     date_future = date_from + datetime.timedelta(hours=int(hours),
                                                  minutes=int(minutes))
     return date_future.strftime(tm_format)
+
+def open_web_page_in_browser(www):
+    webbrowser.open(www, new=2)

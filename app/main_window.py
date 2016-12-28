@@ -1,16 +1,17 @@
 from .base_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QSystemTrayIcon, QMenu
+from PyQt5.QtWidgets import QMainWindow
 from .callbacks_events import Callback
-from PyQt5.QtCore import Qt, pyqtSignal, QDateTime, QTime, QTimer
-from PyQt5 import QtGui
+from PyQt5.QtCore import pyqtSignal, QTime
+
 import config
 import datetime
 from utils import shelve_get, seconds_from_datetime, shelve_save, \
-    format_hours_minutes_from_seconds
+    format_hours_minutes_from_seconds, open_web_page_in_browser
 from app import constants
 import threading
 import time
 import logging
+from .system_tray import SystemTray
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
@@ -87,15 +88,5 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 shelve_save(**{constants.TIMER_AFTER_TIME: None,
                                constants.TIMER_AFTER_ACTION: None})
 
-
-class SystemTray(QSystemTrayIcon):
-
-    def __init__(self, parent=None):
-        self.icon = QtGui.QIcon("app/static/icon.png")
-        QSystemTrayIcon.__init__(self, self.icon, parent)
-        menu = QMenu(parent)
-        def test():
-            exit()
-
-        tray_exit = menu.addAction("Exit", test)
-        self.setContextMenu(menu)
+    def open_web_site(self):
+        open_web_page_in_browser(config.web_site)

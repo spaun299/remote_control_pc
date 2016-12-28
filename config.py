@@ -6,3 +6,4 @@ shelve_file_name = 'conf'
 log_name = 'app.log'
 logger_backup_count = 3
 logger_max_bytes = 1024 * 512
+web_site = 'http://google.com'

@@ -229,17 +229,8 @@ class Callback(object):
         print('Updates accepted' if accepted else 'Updates rejected')
 
     def on_close_event(self, event):
-        # TODO: hide to tray after close.
-        # command self.widget.hide() will hide widget from user
-        reply = QMessageBox.question(self.widget, 'Message',
-                                     'Are you sure to quit?',
-                                     QMessageBox.Yes | QMessageBox.No,
-                                     QMessageBox.No)
-        if reply == QMessageBox.Yes:
-            self.widget.hide()
-            event.accept()
-        else:
-            event.ignore()
+        self.widget.hide()
+        event.ignore()
 
     def on_press_key_event(self, event):
         if event.key() == Qt.Key_Escape:
