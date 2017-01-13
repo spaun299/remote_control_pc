@@ -2,7 +2,6 @@ from .base_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow
 from .callbacks_events import Callback
 from PyQt5.QtCore import pyqtSignal, QTime
-
 import config
 import datetime
 from utils import shelve_get, seconds_from_datetime, shelve_save, \
@@ -12,20 +11,25 @@ import threading
 import time
 import logging
 from .system_tray import SystemTray
+from .http_server.run import run as run_http_server
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     notification_signal = pyqtSignal(str, name=constants.NOTIFICATION)
     timer_after_signal = pyqtSignal(QTime, name=constants.TIMER_AFTER)
 
-    def __init__(self):
+    def __init__(self, os_version):
         super(MainWindow, self).__init__()
+        self.os_version = os_version
         self.run_from_dt = datetime.datetime.now()
+        self.run_from_timestamp = time.time()
         self.setup_app()
         self.callbacks = Callback(self)
         self.on_run_app()
         tray_icon = SystemTray(self)
         tray_icon.show()
+        threading.Thread(target=run_http_server, daemon=True,
+                         args=(self, )).start()
 
     def setup_app(self):
         logging.debug('Setting up UI application...')
@@ -40,6 +44,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.run_from_dt + datetime.timedelta(minutes=1))
         self.action_at_datetime.setMaximumDateTime(self.run_from_dt +
                                                    datetime.timedelta(7))
+        if self.os_version == constants.LINUX:
+            self.action_at_select.removeItem(3)
+            self.action_after_select.removeItem(3)
 
     def show_notification_label(self, text):
         logging.debug('Show notification label. \nText: ' % text)
@@ -49,11 +56,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         logging.debug('Getting values from shelve for timers')
         timer_at = shelve_get(constants.TIMER_AT_DATETIME)
         timer_after = shelve_get(constants.TIMER_AFTER_TIME)
-        time_now = time.time()
         if timer_at:
             logging.debug('At timer exists in shelve file. \n'
                           'Timer at time: %s' % timer_at)
-            if seconds_from_datetime(timer_at) > time_now:
+            if seconds_from_datetime(timer_at) > self.run_from_timestamp:
                 logging.debug('Starting at timer gotten from shelve')
                 threading.Thread(target=self.callbacks.start_timer,
                                  args=(constants.DATE_AT, timer_at,
@@ -72,7 +78,8 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                                      tm_format='%m/%d/%y %H:%M %S') > \
                     time.time():
                 seconds_to_action = seconds_from_datetime(
-                    timer_after, tm_format='%m/%d/%y %H:%M %S') - time_now
+                    timer_after, tm_format='%m/%d/%y %H:%M %S') - \
+                                    self.run_from_timestamp
                 days_time_to_action = format_hours_minutes_from_seconds(
                     seconds_to_action)
                 self.callbacks.show_time_to_action(days_time_to_action)

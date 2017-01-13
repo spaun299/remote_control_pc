@@ -90,5 +90,6 @@ def get_future_date_from_time(hours, minutes, tm_format='%m/%d/%y %H:%M'):
                                                  minutes=int(minutes))
     return date_future.strftime(tm_format)
 
+
 def open_web_page_in_browser(www):
     webbrowser.open(www, new=2)

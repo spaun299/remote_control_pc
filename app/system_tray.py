@@ -12,7 +12,7 @@ class SystemTray(QSystemTrayIcon):
         menu = QMenu(parent)
         menu.addAction(config.applicatin_show_name, self.show_main_window)
         menu.addSeparator()
-        menu.addAction('www', self.parent.open_web_site)
+        menu.addAction('WWW', self.parent.open_web_site)
         menu.addSeparator()
         menu.addAction("Exit", self.on_exit)
         self.setContextMenu(menu)

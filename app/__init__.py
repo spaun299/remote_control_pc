@@ -17,7 +17,8 @@ def main():
     app = QApplication(sys.argv)
     check_and_create_necessarry_files_and_folders()
     shelve_necessarry_fields()
-    form = MainWindow()
+    os_version = get_pc_os()
+    form = MainWindow(os_version)
     form.show()
     app.exec_()
 
@@ -68,3 +69,15 @@ def shelve_necessarry_fields():
         if field not in shelve_dict:
             logging.debug('Shelve field %s not exists. Set as None' % field)
             shelve_save(**{field: None})
+
+
+def get_pc_os():
+    # check current operation system
+    possible_os = (constants.DARWIN, constants.WINDOWS, constants.LINUX)
+    current_os = sys.platform
+    if current_os not in possible_os:
+        # if current os is not supported, exit from app
+        logging.error('%s os is not supported' % current_os)
+        raise KeyboardInterrupt
+    logging.debug('Current os %s ' % current_os)
+    return current_os

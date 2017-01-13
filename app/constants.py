@@ -10,3 +10,21 @@ TIMER_AT_ACTION = 'timer_at_action'
 APP_VERSION = 'app_version'
 TIMER_AFTER = 'timer_after'
 NOTIFICATION = 'notification'
+NOW = 'now'
+SHUTDOWN_TEXT = 'Shutdown'
+RESTART_TEXT = 'Restart'
+SLEEP_TEXT = 'Sleep'
+HIBERNATE_TEXT = 'Hibernate'
+# ---------------
+# constants for client api
+NOW_INT = 0
+SHUTDOWN = 1
+RESTART = 2
+SLEEP = 3
+HIBERNATE = 4
+SERVER_ERROR = 5
+# ---------------
+# computer possible os
+DARWIN = 'darwin'
+WINDOWS = 'win32'
+LINUX = 'linux2'

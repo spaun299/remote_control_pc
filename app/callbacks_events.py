@@ -1,4 +1,4 @@
-from .base_ui import Ui_MainWindow
+from .base_ui1 import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.QtCore import Qt, QTime
 import threading
@@ -6,15 +6,17 @@ import time
 import utils
 from app import constants
 import logging
+from . import pc_controller
 
 
-class Callback(object):
+class Callback(pc_controller.PcController):
 
     def __init__(self, window: (Ui_MainWindow, QMainWindow)):
+        super(Callback, self).__init__(window.os_version)
         self.widget = window
         self.connect()
         self.register_events()
-        self.connect_thead_signals()
+        self.connect_thread_signals()
         self.action_after_timer = 0
         self.action_at_timer = 0
         self.action_after_timer_do = None
@@ -55,7 +57,7 @@ class Callback(object):
         )
         logging.debug('started')
 
-    def connect_thead_signals(self):
+    def connect_thread_signals(self):
         logging.debug('Connecting thread signals')
         self.widget.notification_signal.connect(
             self.widget.label_notification.setText)
@@ -72,6 +74,7 @@ class Callback(object):
         canceled = False
         time_started = int(time.time())
         if event == constants.DATE_AFTER:
+            print(when)
             seconds_to_action = utils.seconds_from_datetime(
                 when, tm_format='%m/%d/%y %H:%M %S') - time_started
             self.action_after_timer = seconds_to_action
@@ -137,7 +140,7 @@ class Callback(object):
                     break
         self.clear_timer(event)
         if not canceled:
-            self.action_ontimer_timeout(event)
+            self.action_ontimer_timeout(event, action)
 
     def set_disabled_timer(self, event, disabled=True):
         if event == constants.DATE_AT:
@@ -238,11 +241,10 @@ class Callback(object):
             # command self.widget.hide() will hide widget from user
             pass
 
-    def action_ontimer_timeout(self, event):
-        print('timeout')
-        action = self.widget.action_after_select.currentText()
-        # TODO: shutdown, reboot, or something else according to action...
+    def action_ontimer_timeout(self, event, action):
         if event == constants.DATE_AFTER:
             self.set_disabled_timer(constants.DATE_AFTER, False)
         elif event == constants.DATE_AT:
             self.set_disabled_timer(constants.DATE_AT, False)
+        if action == constants.SHUTDOWN_TEXT:
+            self.shutdown_pc()
