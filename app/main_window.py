@@ -12,7 +12,7 @@ import time
 import logging
 from .system_tray import SystemTray
 from .http_server.run import run as run_http_server
-
+from .error import BadResponseFromServer
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     notification_signal = pyqtSignal(str, name=constants.NOTIFICATION)

@@ -1,7 +1,7 @@
 import logging
 
 
-class BadResponseFromServer:
+class BadResponseFromServer(Exception):
     def __init__(self, msg):
         self.msg = msg
         logging.error(msg)
