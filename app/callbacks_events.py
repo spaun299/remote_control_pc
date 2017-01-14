@@ -1,4 +1,4 @@
-from .base_ui1 import Ui_MainWindow
+from .base_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.QtCore import Qt, QTime
 import threading
@@ -66,6 +66,7 @@ class Callback(pc_controller.PcController):
 
     def register_events(self):
         self.widget.closeEvent = self.on_close_event
+        self.widget.keyPressEvent = self.on_press_key_event
 
     def start_timer(self, event, when, action):
         logging.debug('Starting %s timer.\n'
@@ -95,7 +96,7 @@ class Callback(pc_controller.PcController):
                                     self.action_at_timer >
                                     self.action_after_timer):
                             self.widget.notification_signal.emit(
-                                    constants.LABEL_NOTIFICATION_TEXT %
+                                    constants.LABEL_NOTIFICATION_TEXT[action] %
                                     days_time_to_action)
                             if not self.action_after_timer % 60:
                                 self.show_time_to_action(days_time_to_action)
@@ -124,13 +125,11 @@ class Callback(pc_controller.PcController):
                         days_time_to_action = utils.\
                             format_hours_minutes_from_seconds(
                               self.action_at_timer)
-                        if not self.action_after_timer:
+                        if not self.action_after_timer or (
+                                    self.action_after_timer >
+                                    self.action_at_timer):
                             self.widget.notification_signal.emit(
-                                constants.LABEL_NOTIFICATION_TEXT %
-                                days_time_to_action)
-                        elif self.action_after_timer > self.action_at_timer:
-                            self.widget.notification_signal.emit(
-                                constants.LABEL_NOTIFICATION_TEXT %
+                                constants.LABEL_NOTIFICATION_TEXT[action] %
                                 days_time_to_action)
                     finally:
                         self.thread_lock.release()
@@ -166,8 +165,8 @@ class Callback(pc_controller.PcController):
         elif event == constants.DATE_AT:
             self.cancel_at_timer = True
 
-    def clear_timer(self, event):
-        self.widget.notification_signal.emit('')
+    def clear_timer(self, event, notification_text=''):
+        self.widget.notification_signal.emit(notification_text)
         if event == constants.DATE_AFTER:
             self.cancel_after_timer = False
             self.action_after_timer = 0
@@ -237,14 +236,20 @@ class Callback(pc_controller.PcController):
 
     def on_press_key_event(self, event):
         if event.key() == Qt.Key_Escape:
-            # TODO: hide to tray after key == escape.
-            # command self.widget.hide() will hide widget from user
-            pass
+            self.widget.hide()
 
     def action_ontimer_timeout(self, event, action):
         if event == constants.DATE_AFTER:
             self.set_disabled_timer(constants.DATE_AFTER, False)
         elif event == constants.DATE_AT:
             self.set_disabled_timer(constants.DATE_AT, False)
-        if action == constants.SHUTDOWN_TEXT:
-            self.shutdown_pc()
+        self.clear_timer(event, notification_text=constants.
+                         PC_ACTION_IN_PROGRESS_TEXT[action])
+        possible_actions = {
+            constants.SHUTDOWN_TEXT: self.shutdown_pc,
+            constants.LOG_OUT_TEXT: self.log_out_pc,
+            constants.RESTART_TEXT: self.restart_pc,
+            constants.SLEEP_TEXT: self.sleep_pc
+        }
+        logging.debug('%s PC' % action)
+        possible_actions[action]()

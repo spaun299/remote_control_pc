@@ -47,6 +47,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         if self.os_version == constants.LINUX:
             self.action_at_select.removeItem(3)
             self.action_after_select.removeItem(3)
+        elif self.os_version == constants.DARWIN:
+            self.action_after_select.removeItem(2)
+            self.action_at_select.removeItem(2)
 
     def show_notification_label(self, text):
         logging.debug('Show notification label. \nText: ' % text)
