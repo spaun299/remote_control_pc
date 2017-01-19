@@ -45,4 +45,5 @@ LOG_OUT = 6
 # computer possible os
 DARWIN = 'darwin'
 WINDOWS = 'win32'
-LINUX = 'linux2'
+LINUX = 'linux'
+LINUX2 = 'linux2'

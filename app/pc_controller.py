@@ -15,6 +15,8 @@ class PcController(object):
                                 constants.SLEEP_TEXT, constants.LOG_OUT_TEXT],
             constants.LINUX: [constants.SHUTDOWN_TEXT, constants.RESTART_TEXT,
                               constants.LOG_OUT_TEXT],
+            constants.LINUX2: [constants.SHUTDOWN_TEXT, constants.RESTART_TEXT,
+                               constants.LOG_OUT_TEXT],
             constants.DARWIN: [constants.SHUTDOWN_TEXT, constants.RESTART_TEXT,
                                constants.SLEEP_TEXT]
         }
@@ -29,6 +31,7 @@ class PcController(object):
         os_commands = {
             constants.WINDOWS: lambda: subprocess.call(['shutdown', '/s']),
             constants.LINUX: lambda: subprocess.call(['shutdown', '-h', '0']),
+            constants.LINUX2: lambda: subprocess.call(['shutdown', '-h', '0']),
             constants.DARWIN: lambda: subprocess.call(['shutdown', '-h', '0']),
         }
         logging.debug('Shutting down PC')
@@ -39,6 +42,7 @@ class PcController(object):
         os_commands = {
             constants.WINDOWS: lambda: subprocess.call(['shutdown', '/r']),
             constants.LINUX: lambda: subprocess.call(['reboot']),
+            constants.LINUX2: lambda: subprocess.call(['reboot']),
             constants.DARWIN: lambda: subprocess.call(['reboot']),
         }
         logging.debug('Restarting PC')
