@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'app_ui.ui'
+# Form implementation generated from reading ui file 'base_ui.ui'
 #
-# Created by: PyQt5 UI code generator 5.7
+# Created: Thu Jan 19 18:19:31 2017
+#      by: PyQt5 UI code generator 5.2.1
 #
 # WARNING! All changes made in this file will be lost!
 
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -32,18 +32,22 @@ class Ui_MainWindow(object):
         font.setBold(True)
         font.setWeight(75)
         self.upper_widget_label.setFont(font)
+        self.upper_widget_label.setStyleSheet("qproperty-alignment: AlignCenter;")
         self.upper_widget_label.setObjectName("upper_widget_label")
         self.bottom_widget = QtWidgets.QWidget(self.main_widget)
         self.bottom_widget.setGeometry(QtCore.QRect(0, 240, 401, 41))
         self.bottom_widget.setObjectName("bottom_widget")
         self.bottom_widget_label = QtWidgets.QLabel(self.bottom_widget)
-        self.bottom_widget_label.setGeometry(QtCore.QRect(10, 10, 381, 31))
+        self.bottom_widget_label.setGeometry(QtCore.QRect(10, 5, 381, 31))
         font = QtGui.QFont()
         font.setFamily("Courier")
+        font.setPointSize(10)
+        font.setBold(True)
+        font.setWeight(75)
         self.bottom_widget_label.setFont(font)
         self.bottom_widget_label.setObjectName("bottom_widget_label")
         self.installUpdates = QtWidgets.QDialogButtonBox(self.bottom_widget)
-        self.installUpdates.setGeometry(QtCore.QRect(250, 10, 131, 32))
+        self.installUpdates.setGeometry(QtCore.QRect(250, 5, 131, 32))
         font = QtGui.QFont()
         font.setFamily("Courier")
         font.setBold(False)
@@ -62,9 +66,11 @@ class Ui_MainWindow(object):
         self.action_after_time.setStyleSheet("")
         self.action_after_time.setObjectName("action_after_time")
         self.action_after_select = QtWidgets.QComboBox(self.action_after_widget)
-        self.action_after_select.setGeometry(QtCore.QRect(10, 0, 110, 26))
+        self.action_after_select.setGeometry(QtCore.QRect(7, 0, 110, 26))
         font = QtGui.QFont()
         font.setFamily("Courier")
+        font.setBold(False)
+        font.setWeight(50)
         self.action_after_select.setFont(font)
         self.action_after_select.setStyleSheet("")
         self.action_after_select.setObjectName("action_after_select")
@@ -73,9 +79,10 @@ class Ui_MainWindow(object):
         self.action_after_select.addItem("")
         self.action_after_select.addItem("")
         self.label_2 = QtWidgets.QLabel(self.action_after_widget)
-        self.label_2.setGeometry(QtCore.QRect(119, 5, 41, 16))
+        self.label_2.setGeometry(QtCore.QRect(120, 5, 41, 16))
         font = QtGui.QFont()
         font.setFamily("Courier")
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_2.setFont(font)
@@ -93,7 +100,7 @@ class Ui_MainWindow(object):
         self.action_at_widget.setGeometry(QtCore.QRect(-2, 210, 401, 31))
         self.action_at_widget.setObjectName("action_at_widget")
         self.action_at_select = QtWidgets.QComboBox(self.action_at_widget)
-        self.action_at_select.setGeometry(QtCore.QRect(10, 0, 110, 26))
+        self.action_at_select.setGeometry(QtCore.QRect(7, 0, 110, 26))
         font = QtGui.QFont()
         font.setFamily("Courier")
         self.action_at_select.setFont(font)
@@ -103,9 +110,10 @@ class Ui_MainWindow(object):
         self.action_at_select.addItem("")
         self.action_at_select.addItem("")
         self.label_3 = QtWidgets.QLabel(self.action_at_widget)
-        self.label_3.setGeometry(QtCore.QRect(126, 5, 31, 16))
+        self.label_3.setGeometry(QtCore.QRect(127, 5, 31, 16))
         font = QtGui.QFont()
         font.setFamily("Courier")
+        font.setPointSize(9)
         font.setBold(True)
         font.setWeight(75)
         self.label_3.setFont(font)
@@ -140,7 +148,7 @@ class Ui_MainWindow(object):
         self.label_notification.setObjectName("label_notification")
         MainWindow.setCentralWidget(self.main_widget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 22))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 25))
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(self.menuBar)
         self.menuFile.setObjectName("menuFile")
@@ -198,7 +206,7 @@ class Ui_MainWindow(object):
 "p, li { white-space: pre-wrap; }\n"
 "</style></head><body style=\" font-family:\'.SF NS Text\'; font-size:13pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\"-qt-paragraph-type:empty; margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\"><br /></p></body></html>"))
-        self.upper_widget_label.setText(_translate("MainWindow", "    Program is Running"))
+        self.upper_widget_label.setText(_translate("MainWindow", "Program is Running"))
         self.bottom_widget_label.setText(_translate("MainWindow", "There are new updates.Install? "))
         self.action_after_select.setItemText(0, _translate("MainWindow", "Shutdown"))
         self.action_after_select.setItemText(1, _translate("MainWindow", "Restart"))
