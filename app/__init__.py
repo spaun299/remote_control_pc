@@ -73,7 +73,7 @@ def shelve_necessarry_fields():
 
 def get_pc_os():
     # check current operation system
-    possible_os = (constants.DARWIN, constants.WINDOWS, constants.LINUX)
+    possible_os = (constants.DARWIN, constants.WINDOWS, constants.LINUX, constants.LINUX2)
     current_os = sys.platform
     if current_os not in possible_os:
         # if current os is not supported, exit from app

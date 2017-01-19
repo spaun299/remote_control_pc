@@ -44,12 +44,12 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.run_from_dt + datetime.timedelta(minutes=1))
         self.action_at_datetime.setMaximumDateTime(self.run_from_dt +
                                                    datetime.timedelta(7))
-        if self.os_version == constants.LINUX:
-            self.action_at_select.removeItem(3)
-            self.action_after_select.removeItem(3)
-        elif self.os_version == constants.DARWIN:
+        if self.os_version == constants.DARWIN:
             self.action_after_select.removeItem(2)
             self.action_at_select.removeItem(2)
+        elif self.os_version in (constants.LINUX, constants.LINUX2):
+            self.action_at_select.removeItem(3)
+            self.action_after_select.removeItem(3)
 
     def show_notification_label(self, text):
         logging.debug('Show notification label. \nText: ' % text)
