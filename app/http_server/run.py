@@ -23,6 +23,6 @@ def run(qt_app):
         logging.debug('Starting flask app at port %s ' % port)
         app.run(host='0.0.0.0', port=port)
     except Exception as e:
-        logging.error("Can't start flask server. \nError: " % e)
+        logging.error("Can't start flask server. \nError: %s" % e)
 
 from .api import *

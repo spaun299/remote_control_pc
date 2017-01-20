@@ -36,31 +36,31 @@ p, li { white-space: pre-wrap; }
    <bool>false</bool>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: #ECF0F1;</string>
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="main_widget">
    <property name="styleSheet">
     <string notr="true"/>
    </property>
-   <widget class="QWidget" name="upper_widget" native="true">
+   <widget class="QWidget" name="background_widget" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>381</width>
-      <height>131</height>
+      <x>-10</x>
+      <y>-10</y>
+      <width>421</width>
+      <height>291</height>
      </rect>
     </property>
     <property name="styleSheet">
-     <string notr="true">background-color: #1BBC9B; border-radius: 10px;</string>
+     <string notr="true">#background_widget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.507, y2:1, stop:0.444976 rgba(27, 188, 155, 255), stop:1 rgba(255, 255, 255, 255))}</string>
     </property>
     <widget class="QLabel" name="upper_widget_label">
      <property name="geometry">
       <rect>
        <x>20</x>
-       <y>40</y>
-       <width>341</width>
-       <height>51</height>
+       <y>60</y>
+       <width>381</width>
+       <height>61</height>
       </rect>
      </property>
      <property name="font">
@@ -78,6 +78,8 @@ p, li { white-space: pre-wrap; }
       <string>Program is Running</string>
      </property>
     </widget>
+    <zorder>upper_widget_label</zorder>
+    <zorder>label_notification</zorder>
    </widget>
    <widget class="QWidget" name="bottom_widget" native="true">
     <property name="geometry">
@@ -112,10 +114,10 @@ p, li { white-space: pre-wrap; }
     <widget class="QDialogButtonBox" name="installUpdates">
      <property name="geometry">
       <rect>
-       <x>250</x>
+       <x>290</x>
        <y>5</y>
-       <width>131</width>
-       <height>32</height>
+       <width>100</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="font">
@@ -174,7 +176,7 @@ p, li { white-space: pre-wrap; }
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true"/>
+      <string notr="true">QComboBox{selection-background-color: blue}</string>
      </property>
      <item>
       <property name="text">
@@ -218,13 +220,26 @@ p, li { white-space: pre-wrap; }
       <string>after</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="action_after_cancel">
+     <property name="geometry">
+      <rect>
+       <x>340</x>
+       <y>0</y>
+       <width>60</width>
+       <height>24</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Cancel</string>
+     </property>
+    </widget>
     <widget class="QPushButton" name="action_after_submit">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>293</x>
        <y>0</y>
-       <width>50</width>
-       <height>28</height>
+       <width>45</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="font">
@@ -232,21 +247,15 @@ p, li { white-space: pre-wrap; }
        <family>Courier</family>
       </font>
      </property>
+     <property name="cursor">
+      <cursorShape>OpenHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">    QPushButton{}
+QPushButton:pressed{}</string>
+     </property>
      <property name="text">
       <string>OK</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="action_after_cancel">
-     <property name="geometry">
-      <rect>
-       <x>334</x>
-       <y>0</y>
-       <width>71</width>
-       <height>28</height>
-      </rect>
-     </property>
-     <property name="text">
-      <string>Cancel</string>
      </property>
     </widget>
    </widget>
@@ -318,10 +327,10 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="action_at_submit">
      <property name="geometry">
       <rect>
-       <x>290</x>
+       <x>293</x>
        <y>0</y>
-       <width>50</width>
-       <height>28</height>
+       <width>45</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="font">
@@ -351,16 +360,22 @@ p, li { white-space: pre-wrap; }
     <widget class="QPushButton" name="action_at_cancel">
      <property name="geometry">
       <rect>
-       <x>334</x>
+       <x>340</x>
        <y>0</y>
-       <width>71</width>
-       <height>28</height>
+       <width>60</width>
+       <height>24</height>
       </rect>
      </property>
      <property name="text">
       <string>Cancel</string>
      </property>
     </widget>
+    <zorder>action_at_select</zorder>
+    <zorder>label_3</zorder>
+    <zorder>action_at_submit</zorder>
+    <zorder>action_at_datetime</zorder>
+    <zorder>action_at_cancel</zorder>
+    <zorder>action_after_submit</zorder>
    </widget>
    <widget class="QLabel" name="label_notification">
     <property name="geometry">
