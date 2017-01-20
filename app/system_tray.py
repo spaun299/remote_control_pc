@@ -2,6 +2,7 @@ from PyQt5 import QtGui
 from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QMessageBox
 import logging
 import config
+import sys
 
 
 class SystemTray(QSystemTrayIcon):
@@ -25,7 +26,7 @@ class SystemTray(QSystemTrayIcon):
         self.parent.show()
         if reply == QMessageBox.Yes:
             logging.debug('Exit from application via tray')
-            exit()
+            sys.exit()
         else:
             self.parent.hide()
 
