@@ -25,7 +25,6 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.run_from_timestamp = time.time()
         self.setup_app()
         self.callbacks = Callback(self)
-        self.on_run_app()
         tray_icon = SystemTray(self)
         tray_icon.show()
         threading.Thread(target=run_http_server, daemon=True,
@@ -44,18 +43,13 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             self.run_from_dt + datetime.timedelta(minutes=1))
         self.action_at_datetime.setMaximumDateTime(self.run_from_dt +
                                                    datetime.timedelta(7))
+        self.action_at_datetime.setDisplayFormat('MM/dd/yy hh:mm')
         if self.os_version == constants.DARWIN:
             self.action_after_select.removeItem(2)
             self.action_at_select.removeItem(2)
         elif self.os_version in (constants.LINUX, constants.LINUX2):
             self.action_at_select.removeItem(3)
             self.action_after_select.removeItem(3)
-
-    def show_notification_label(self, text):
-        logging.debug('Show notification label. \nText: ' % text)
-        self.label_notification.setText(text)
-
-    def on_run_app(self):
         logging.debug('Getting values from shelve for timers')
         timer_at = shelve_get(constants.TIMER_AT_DATETIME)
         timer_after = shelve_get(constants.TIMER_AFTER_TIME)
@@ -97,6 +91,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
                 logging.debug('Setting timer after to shelve as None')
                 shelve_save(**{constants.TIMER_AFTER_TIME: None,
                                constants.TIMER_AFTER_ACTION: None})
+
+    def show_notification_label(self, text):
+        logging.debug('Show notification label. \nText: ' % text)
+        self.label_notification.setText(text)
 
     def open_web_site(self):
         open_web_page_in_browser(config.web_site)
