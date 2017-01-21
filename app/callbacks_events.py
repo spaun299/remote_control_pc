@@ -1,5 +1,3 @@
-from .base_ui import Ui_MainWindow
-from PyQt5.QtWidgets import QMainWindow, QMessageBox
 from PyQt5.QtCore import Qt, QTime
 import threading
 import time
@@ -11,7 +9,7 @@ from . import pc_controller
 
 class Callback(pc_controller.PcController):
 
-    def __init__(self, window: (Ui_MainWindow, QMainWindow)):
+    def __init__(self, window):
         super(Callback, self).__init__(window.os_version)
         self.widget = window
         self.connect()

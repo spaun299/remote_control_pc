@@ -5,6 +5,8 @@ import os
 import config
 import logging
 import webbrowser
+from app import constants
+import sys
 
 
 def documents_folder():
@@ -93,3 +95,16 @@ def get_future_date_from_time(hours, minutes, tm_format='%m/%d/%y %H:%M'):
 
 def open_web_page_in_browser(www):
     webbrowser.open(www, new=2)
+
+
+def get_pc_os():
+    # check current operation system
+    possible_os = (constants.DARWIN, constants.WINDOWS, constants.LINUX,
+                   constants.LINUX2)
+    current_os = sys.platform
+    if current_os not in possible_os:
+        # if current os is not supported, exit from app
+        logging.error('%s os is not supported' % current_os)
+        raise KeyboardInterrupt
+    logging.debug('Current os %s ' % current_os)
+    return current_os
