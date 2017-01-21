@@ -150,7 +150,6 @@ class Callback(pc_controller.PcController):
             self.widget.action_after_time.setDisabled(disabled)
 
     def show_time_to_action(self, days_time_to_action):
-        print(days_time_to_action)
         hrs, mins = [int(val) for val in
                      days_time_to_action.split(
                          ':')[:-1][-2:]]

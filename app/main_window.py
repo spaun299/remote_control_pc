@@ -13,7 +13,7 @@ from .system_tray import SystemTray
 from .http_server.run import run as run_http_server
 os_version = get_pc_os()
 if os_version == constants.DARWIN:
-    from .base_ui_linux import Ui_MainWindow
+    from .base_ui_osx import Ui_MainWindow
 elif os_version == constants.WINDOWS:
     from .base_ui_windows import Ui_MainWindow
 elif os_version in (constants.LINUX, constants.LINUX2):
