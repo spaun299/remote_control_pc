@@ -1,24 +1,30 @@
-from .base_ui import Ui_MainWindow
 from PyQt5.QtWidgets import QMainWindow
 from .callbacks_events import Callback
 from PyQt5.QtCore import pyqtSignal, QTime
 import config
 import datetime
 from utils import shelve_get, seconds_from_datetime, shelve_save, \
-    format_hours_minutes_from_seconds, open_web_page_in_browser
+    format_hours_minutes_from_seconds, open_web_page_in_browser, get_pc_os
 from app import constants
 import threading
 import time
 import logging
 from .system_tray import SystemTray
 from .http_server.run import run as run_http_server
+os_version = get_pc_os()
+if os_version == constants.DARWIN:
+    from .base_ui_linux import Ui_MainWindow
+elif os_version == constants.WINDOWS:
+    from .base_ui_windows import Ui_MainWindow
+elif os_version in (constants.LINUX, constants.LINUX2):
+    from .base_ui_linux import Ui_MainWindow
 
 
 class MainWindow(QMainWindow, Ui_MainWindow):
     notification_signal = pyqtSignal(str, name=constants.NOTIFICATION)
     timer_after_signal = pyqtSignal(QTime, name=constants.TIMER_AFTER)
 
-    def __init__(self, os_version):
+    def __init__(self):
         super(MainWindow, self).__init__()
         self.os_version = os_version
         self.run_from_dt = datetime.datetime.now()
