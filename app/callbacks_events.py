@@ -10,6 +10,13 @@ from . import pc_controller
 
 
 class Callback(pc_controller.PcController):
+    instance = None
+
+    def __new__(cls, *args, **kwargs):
+        # set as singleton
+        if not cls.instance:
+            cls.instance = object.__new__(cls)
+        return cls.instance
 
     def __init__(self, window: (Ui_MainWindow, QMainWindow)):
         super(Callback, self).__init__(window.os_version)
