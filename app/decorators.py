@@ -15,9 +15,12 @@ def is_valid_shelve(folder):
                 logging.debug('Can"t open shelve file. Permission denied.'
                               'Recreating shelve files')
                 app_doc_folder = folder
-                shelve_dir_file = app_doc_folder + '/%s.dir' % config.shelve_file_name
-                shelve_dat_file = app_doc_folder + '/%s.dat' % config.shelve_file_name
-                shelve_bak_file = app_doc_folder + '/%s.bak' % config.shelve_file_name
+                shelve_dir_file = app_doc_folder + '/%s.dir' % \
+                                                   config.shelve_file_name
+                shelve_dat_file = app_doc_folder + '/%s.dat' % \
+                                                   config.shelve_file_name
+                shelve_bak_file = app_doc_folder + '/%s.bak' % \
+                                                   config.shelve_file_name
                 for f in (shelve_bak_file, shelve_dat_file, shelve_dir_file):
                     os.remove(f)
                 with open(shelve_dat_file, 'a'):

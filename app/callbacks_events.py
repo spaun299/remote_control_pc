@@ -54,7 +54,7 @@ class Callback(pc_controller.PcController, metaclass=Singleton):
         self.widget.action_at_cancel.clicked.connect(
             lambda: self.on_click_cancel_timer(event=constants.DATE_AT)
         )
-        logging.debug('started')
+        logging.debug('Events for actions were connected')
 
     def connect_thread_signals(self):
         logging.debug('Connecting thread signals')
