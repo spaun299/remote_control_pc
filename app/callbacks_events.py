@@ -5,9 +5,10 @@ import utils
 from app import constants
 import logging
 from . import pc_controller
+from .metaclasses import Singleton
 
 
-class Callback(pc_controller.PcController):
+class Callback(pc_controller.PcController, metaclass=Singleton):
 
     def __init__(self, window):
         super(Callback, self).__init__(window.os_version)
@@ -244,6 +245,8 @@ class Callback(pc_controller.PcController):
             self.widget.hide()
 
     def action_ontimer_timeout(self, event, action):
+        logging.debug('Timeout timer. %s' %
+                      constants.PC_ACTION_IN_PROGRESS_TEXT[action])
         if event == constants.DATE_AFTER:
             self.set_disabled_timer(constants.DATE_AFTER, False)
         elif event == constants.DATE_AT:
@@ -258,3 +261,5 @@ class Callback(pc_controller.PcController):
         }
         logging.debug('%s PC' % action)
         possible_actions[action]()
+        time.sleep(10)
+        self.widget.notification_signal.emit('')

@@ -59,6 +59,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         logging.debug('Getting values from shelve for timers')
         timer_at = shelve_get(constants.TIMER_AT_DATETIME)
         timer_after = shelve_get(constants.TIMER_AFTER_TIME)
+        self.callbacks = Callback(self)
         if timer_at:
             logging.debug('At timer exists in shelve file. \n'
                           'Timer at time: %s' % timer_at)
