@@ -7,6 +7,7 @@ import logging
 import webbrowser
 from app import constants
 import sys
+from app.decorators import is_valid_shelve
 
 
 def documents_folder():
@@ -17,29 +18,15 @@ def get_folder_path_in_documents(folder=config.applicatin_show_name):
     return documents_folder() + '/' + folder
 
 
+@is_valid_shelve(get_folder_path_in_documents())
 def shelve_get(key):
     logging.debug('Getting shelve value for key: %s' % key)
-    try:
-        shelve_file = shelve.open(get_folder_path_in_documents() + '/' +
-                                  config.shelve_file_name)
-    except PermissionError:
-        recreate_shelve_files()
-    # TODO: somehow get shelve file
+    shelve_file = shelve.open(get_folder_path_in_documents() + '/' +
+                              config.shelve_file_name)
     return shelve_file.get(key)
 
-def recreate_shelve_files():
-    # TODO: remove shelve files
-    logging.debug('Can"t open shelve file. Permission denied.'
-                  'Recreating shelve files')
-    app_doc_folder = get_folder_path_in_documents()
-    shelve_dir_file = app_doc_folder + '/%s.dir' % config.shelve_file_name
-    shelve_dat_file = app_doc_folder + '/%s.dat' % config.shelve_file_name
 
-    with open(shelve_dat_file, 'a'):
-        pass
-    with open(shelve_dir_file, 'a'):
-        pass
-
+@is_valid_shelve(get_folder_path_in_documents())
 def shelve_get_dict():
     logging.debug('Getting all shelve file as dictionary')
     shelve_obj = shelve.open(
@@ -47,6 +34,7 @@ def shelve_get_dict():
     return dict(shelve_obj)
 
 
+@is_valid_shelve(get_folder_path_in_documents())
 def shelve_delete(key):
     logging.debug('Delete shelve value for key: %s' % key)
     shelve_file = shelve.open(
@@ -56,6 +44,7 @@ def shelve_delete(key):
     del shelve_file[key]
 
 
+@is_valid_shelve(get_folder_path_in_documents())
 def shelve_save(**kwargs):
     logging.debug('Saving shelve values: %s' % kwargs)
     shelve_file = shelve.open(

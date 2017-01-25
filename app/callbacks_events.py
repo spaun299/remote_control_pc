@@ -260,3 +260,5 @@ class Callback(pc_controller.PcController):
         }
         logging.debug('%s PC' % action)
         possible_actions[action]()
+        time.sleep(10)
+        self.widget.notification_signal.emit('')
