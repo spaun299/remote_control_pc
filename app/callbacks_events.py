@@ -109,6 +109,14 @@ class Callback(pc_controller.PcController):
         elif event == constants.DATE_AT:
             seconds_to_action = utils.seconds_from_datetime(
                 when) - time_started
+            print(seconds_to_action)
+            if seconds_to_action < 0:
+                self.widget.notification_signal.emit(
+                    constants.LABEL_NOTIFICATION_TEXT['time_less_zero'])
+                self.set_disabled_timer(constants.DATE_AT, False)
+                time.sleep(5)
+                self.widget.notification_signal.emit('')
+                return
             self.action_at_timer = seconds_to_action
             self.action_at_timer_do = action
             utils.shelve_save(

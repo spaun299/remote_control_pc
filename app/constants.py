@@ -31,7 +31,8 @@ LABEL_NOTIFICATION_TEXT = {
     SHUTDOWN_TEXT: "Shutting down computer in %s",
     SLEEP_TEXT: "Your computer will be in sleep mode in %s",
     LOG_OUT_TEXT: "Logging out in %s",
-    HIBERNATE_TEXT: "Your computer will be in hibernate mode in %s"}
+    HIBERNATE_TEXT: "Your computer will be in hibernate mode in %s",
+    'time_less_zero': "Incorrect date. Please enter a future date"}
 # ---------------
 # constants for client api
 NOW_INT = 0
