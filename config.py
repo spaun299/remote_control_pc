@@ -7,4 +7,4 @@ log_name = 'app.log'
 logger_backup_count = 3
 logger_max_bytes = 1024 * 512
 web_site = 'http://google.com'
-api_base_url = 'http://127.0.0.1:5000'
+api_base_url = 'http://google.com'

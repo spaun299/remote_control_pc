@@ -9,7 +9,11 @@ TIMER_AT_ACTION = 'timer_at_action'
 APP_VERSION = 'app_version'
 TIMER_AFTER = 'timer_after'
 NOTIFICATION = 'notification'
+NOTIFICATION_TRAY = 'notification_tray'
 NOW = 'now'
+STATUS_UP_TO_DATE = 'up_to_date'
+STATUS_NEED_UPDATE = 'need_update'
+STATUS_NO_INTERNET = 'no_internet_connection'
 # ---------------
 # possible actions with pc
 SHUTDOWN_TEXT = 'Shutdown'
@@ -34,6 +38,13 @@ LABEL_NOTIFICATION_TEXT = {
     HIBERNATE_TEXT: "Your computer will be in hibernate mode in %s",
     'time_less_zero': "Incorrect date. Please enter a future date"}
 # ---------------
+# statuses text
+STATUS_TEXT = {
+    STATUS_UP_TO_DATE: "Program is Running...",
+    STATUS_NEED_UPDATE: "Please install new updates!",
+    STATUS_NO_INTERNET: "No Internet connection!"
+}
+# ---------------
 # constants for client api
 NOW_INT = 0
 SHUTDOWN = 1
@@ -48,3 +59,17 @@ DARWIN = 'darwin'
 WINDOWS = 'win32'
 LINUX = 'linux'
 LINUX2 = 'linux2'
+# ---------------
+# everything associated with UI part
+background_color_green = "qlineargradient(spread:pad, x1:0.502, y1:0," \
+                         " x2:0.507, y2:1, stop:0.444976 " \
+                         "rgba(27, 188, 155, 255), stop:1 " \
+                         "rgba(255, 255, 255, 255))"
+background_color_yellow = "qlineargradient(spread:pad, x1:0.502, y1:0," \
+                          " x2:0.507, y2:1, stop:0.444976 " \
+                          "rgba(245, 171, 53, 1), stop:1 " \
+                          "rgba(255, 255, 255, 255))"
+background_color_red = "qlineargradient(spread:pad, x1:0.502, y1:0," \
+                       " x2:0.507, y2:1, stop:0.444976 " \
+                       "rgba(27, 188, 155, 255), stop:1 " \
+                       "rgba(255, 255, 255, 255))"

@@ -1,16 +1,28 @@
 from PyQt5 import QtGui
-from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QMessageBox
+from PyQt5.QtWidgets import QSystemTrayIcon, QMenu, QMessageBox, QAction
+from PyQt5.QtCore import pyqtSignal
 import logging
 import config
 import sys
+from . import constants
+import threading
 
 
 class SystemTray(QSystemTrayIcon):
+    tray_notification_signal = pyqtSignal(str,
+                                          name=constants.NOTIFICATION_TRAY)
+
     def __init__(self, parent=None):
         self.parent = parent
         self.icon = QtGui.QIcon("app/static/icon.png")
         QSystemTrayIcon.__init__(self, self.icon, parent)
         menu = QMenu(parent)
+        self.show_notification = QAction(self.parent)
+        self.show_notification.setDisabled(True)
+        self.show_notification.setObjectName(constants.NOTIFICATION_TRAY)
+        menu.setStyleSheet("")
+        menu.addAction(self.show_notification)
+        menu.addSeparator()
         menu.addAction(config.applicatin_show_name, self.show_main_window)
         menu.addSeparator()
         menu.addAction('WWW', self.parent.open_web_site)

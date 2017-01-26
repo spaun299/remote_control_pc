@@ -8,6 +8,7 @@ import webbrowser
 from app import constants
 import sys
 from app.decorators import is_valid_shelve
+from PyQt5 import QtGui
 
 
 def documents_folder():
@@ -113,3 +114,12 @@ def get_pc_os():
         raise KeyboardInterrupt
     logging.debug('Current os %s ' % current_os)
     return current_os
+
+
+def get_font(family="Courier", size=22, weight=75, bold=False):
+    font = QtGui.QFont()
+    font.setFamily(family)
+    font.setPointSize(size)
+    font.setBold(bold)
+    font.setWeight(weight)
+    return font

@@ -4,13 +4,15 @@ from PyQt5.QtCore import pyqtSignal, QTime
 import config
 import datetime
 from utils import shelve_get, seconds_from_datetime, shelve_save, \
-    format_hours_minutes_from_seconds, open_web_page_in_browser, get_pc_os
+    format_hours_minutes_from_seconds, open_web_page_in_browser, get_pc_os, \
+    get_font
 from app import constants
 import threading
 import time
 import logging
 from .system_tray import SystemTray
 from .http_server.run import run as run_http_server
+from urllib.request import urlopen, URLError
 os_version = get_pc_os()
 if os_version == constants.DARWIN:
     from .base_ui_osx import Ui_MainWindow
@@ -31,10 +33,66 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         self.run_from_timestamp = time.time()
         self.setup_app()
         self.callbacks = Callback(self)
-        tray_icon = SystemTray(self)
-        tray_icon.show()
+        self.tray_icon = SystemTray(self)
+        self.tray_icon.show()
         threading.Thread(target=run_http_server, daemon=True,
                          args=(self, )).start()
+        self._app_status = None
+        self.app_status = None
+
+    @property
+    def app_status(self):
+        return self._app_status or constants.STATUS_UP_TO_DATE
+
+    @app_status.setter
+    def app_status(self, val):
+        logging.debug('Changing application status to %s' % val)
+        if val is None:
+            if not self.check_internet_connection():
+                val = constants.STATUS_NO_INTERNET
+            elif self.check_for_new_updates():
+                val = constants.STATUS_NEED_UPDATE
+            else:
+                val = constants.STATUS_UP_TO_DATE
+        if val == constants.STATUS_UP_TO_DATE:
+            font = get_font(bold=True)
+            self.change_background_color(constants.background_color_green)
+            self.upper_widget_label.setFont(font)
+        elif val == constants.STATUS_NO_INTERNET:
+            font = get_font(size=18, weight=65, bold=True)
+            self.change_background_color(constants.background_color_red)
+            self.upper_widget_label.setFont(font)
+        elif val == constants.STATUS_NEED_UPDATE:
+            font = get_font(size=16, weight=62, bold=True)
+            self.change_background_color(constants.background_color_yellow)
+            self.upper_widget_label.setFont(font)
+        self._app_status = val
+        status_text = constants.STATUS_TEXT[val]
+        self.tray_icon.show_notification.setText(status_text)
+        self.upper_widget_label.setText(status_text)
+
+    def check_for_new_updates(self):
+        # TODO: MUST BE IMPLEMENTED
+        logging.debug('Checking for new updates')
+        return True
+
+    @staticmethod
+    def check_internet_connection():
+        """ check if there is internet connection.
+            :return True if OK, and False if no IC """
+        logging.debug('Checking internet connection')
+        try:
+            urlopen(config.api_base_url, timeout=1)
+            logging.debug('Connected to the internet')
+            return True
+        except URLError as err:
+            logging.debug('No internet connection')
+            return False
+
+    def change_background_color(self, color):
+        # TODO: MUST BE IMPLEMENTED PROPERLY!
+        self.background_widget.setStyleSheet(
+            "#background_widget{background-color: %s}" % color)
 
     def setup_app(self):
         logging.debug('Setting up UI application...')
