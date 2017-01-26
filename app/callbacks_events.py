@@ -6,6 +6,8 @@ from app import constants
 import logging
 from . import pc_controller
 from .metaclasses import Singleton
+import sys
+from PyQt5.QtWidgets import QMessageBox
 
 
 class Callback(pc_controller.PcController, metaclass=Singleton):
@@ -54,6 +56,7 @@ class Callback(pc_controller.PcController, metaclass=Singleton):
         self.widget.action_at_cancel.clicked.connect(
             lambda: self.on_click_cancel_timer(event=constants.DATE_AT)
         )
+        self.widget.action_exit.triggered.connect(self.on_exit)
         logging.debug('Events for actions were connected')
 
     def connect_thread_signals(self):
@@ -239,6 +242,15 @@ class Callback(pc_controller.PcController, metaclass=Singleton):
     def on_close_event(self, event):
         self.widget.hide()
         event.ignore()
+
+    def on_exit(self):
+        reply = QMessageBox.question(self.widget, 'Message',
+                                     'Are you sure to quit?',
+                                     QMessageBox.Yes | QMessageBox.No,
+                                     QMessageBox.No)
+        if reply == QMessageBox.Yes:
+            logging.debug('Exit from application')
+            sys.exit()
 
     def on_press_key_event(self, event):
         if event.key() == Qt.Key_Escape:
