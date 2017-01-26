@@ -1,9 +1,8 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'base_ui.ui'
+# Form implementation generated from reading ui file 'base_ui_windows.ui'
 #
-# Created: Fri Jan 20 19:15:40 2017
-#      by: PyQt5 UI code generator 5.2.1
+# Created by: PyQt5 UI code generator 5.7
 #
 # WARNING! All changes made in this file will be lost!
 
@@ -20,20 +19,6 @@ class Ui_MainWindow(object):
         self.main_widget = QtWidgets.QWidget(MainWindow)
         self.main_widget.setStyleSheet("")
         self.main_widget.setObjectName("main_widget")
-        self.background_widget = QtWidgets.QWidget(self.main_widget)
-        self.background_widget.setGeometry(QtCore.QRect(-10, -10, 421, 291))
-        self.background_widget.setStyleSheet("#background_widget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.507, y2:1, stop:0.444976 rgba(27, 188, 155, 255), stop:1 rgba(255, 255, 255, 255))}")
-        self.background_widget.setObjectName("background_widget")
-        self.upper_widget_label = QtWidgets.QLabel(self.background_widget)
-        self.upper_widget_label.setGeometry(QtCore.QRect(20, 60, 381, 61))
-        font = QtGui.QFont()
-        font.setFamily("Courier")
-        font.setPointSize(22)
-        font.setBold(True)
-        font.setWeight(75)
-        self.upper_widget_label.setFont(font)
-        self.upper_widget_label.setStyleSheet("qproperty-alignment: AlignCenter;")
-        self.upper_widget_label.setObjectName("upper_widget_label")
         self.bottom_widget = QtWidgets.QWidget(self.main_widget)
         self.bottom_widget.setGeometry(QtCore.QRect(0, 240, 401, 41))
         self.bottom_widget.setObjectName("bottom_widget")
@@ -53,6 +38,7 @@ class Ui_MainWindow(object):
         font.setBold(False)
         font.setWeight(50)
         self.installUpdates.setFont(font)
+        self.installUpdates.setCursor(QtGui.QCursor(QtCore.Qt.OpenHandCursor))
         self.installUpdates.setStandardButtons(QtWidgets.QDialogButtonBox.No|QtWidgets.QDialogButtonBox.Yes)
         self.installUpdates.setObjectName("installUpdates")
         self.action_after_widget = QtWidgets.QWidget(self.main_widget)
@@ -149,9 +135,29 @@ class Ui_MainWindow(object):
         self.label_notification.setStyleSheet("qproperty-alignment: AlignCenter;")
         self.label_notification.setText("")
         self.label_notification.setObjectName("label_notification")
+        self.upper_widget_label = QtWidgets.QLabel(self.main_widget)
+        self.upper_widget_label.setGeometry(QtCore.QRect(10, 70, 381, 61))
+        font = QtGui.QFont()
+        font.setFamily("Courier")
+        font.setPointSize(22)
+        font.setBold(True)
+        font.setWeight(75)
+        self.upper_widget_label.setFont(font)
+        self.upper_widget_label.setStyleSheet("qproperty-alignment: AlignCenter;")
+        self.upper_widget_label.setObjectName("upper_widget_label")
+        self.background_widget = QtWidgets.QWidget(self.main_widget)
+        self.background_widget.setGeometry(QtCore.QRect(-10, 0, 421, 291))
+        self.background_widget.setStyleSheet("#background_widget{background-color: qlineargradient(spread:pad, x1:0.502, y1:0, x2:0.507, y2:1, stop:0.444976 rgba(27, 188, 155, 255), stop:1 rgba(255, 255, 255, 255))}")
+        self.background_widget.setObjectName("background_widget")
+        self.background_widget.raise_()
+        self.bottom_widget.raise_()
+        self.action_after_widget.raise_()
+        self.action_at_widget.raise_()
+        self.label_notification.raise_()
+        self.upper_widget_label.raise_()
         MainWindow.setCentralWidget(self.main_widget)
         self.menuBar = QtWidgets.QMenuBar(MainWindow)
-        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 25))
+        self.menuBar.setGeometry(QtCore.QRect(0, 0, 400, 22))
         self.menuBar.setObjectName("menuBar")
         self.menuFile = QtWidgets.QMenu(self.menuBar)
         self.menuFile.setObjectName("menuFile")
@@ -204,7 +210,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Remote PC"))
-        self.upper_widget_label.setText(_translate("MainWindow", ""))
         self.bottom_widget_label.setText(_translate("MainWindow", "There are new updates.Install? "))
         self.action_after_select.setItemText(0, _translate("MainWindow", "Shutdown"))
         self.action_after_select.setItemText(1, _translate("MainWindow", "Restart"))
@@ -220,6 +225,7 @@ class Ui_MainWindow(object):
         self.label_3.setText(_translate("MainWindow", "at"))
         self.action_at_submit.setText(_translate("MainWindow", "OK"))
         self.action_at_cancel.setText(_translate("MainWindow", "Cancel"))
+        self.upper_widget_label.setText(_translate("MainWindow", "Program is Running"))
         self.menuFile.setTitle(_translate("MainWindow", "File"))
         self.menuHelp.setTitle(_translate("MainWindow", "Help"))
         self.actionWqeasd.setText(_translate("MainWindow", "FIle"))
