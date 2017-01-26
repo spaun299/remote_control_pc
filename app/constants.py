@@ -36,7 +36,8 @@ LABEL_NOTIFICATION_TEXT = {
     SLEEP_TEXT: "Your computer will be in sleep mode in %s",
     LOG_OUT_TEXT: "Logging out in %s",
     HIBERNATE_TEXT: "Your computer will be in hibernate mode in %s",
-    'time_less_zero': "Incorrect date. Please enter a future date"}
+    'time_less_zero': "Incorrect date. Please enter a future date",
+    'new_updates_available': 'There are new updates.Install?'}
 # ---------------
 # statuses text
 STATUS_TEXT = {

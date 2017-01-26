@@ -48,6 +48,10 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     @app_status.setter
     def app_status(self, val):
         logging.debug('Changing application status to %s' % val)
+        # if old status(before this one) was NEED_UPDATE,
+        # we should to erase notification text about updates
+        if self._app_status == constants.STATUS_NEED_UPDATE:
+            self.hide_install_updates()
         if val is None:
             if not self.check_internet_connection():
                 val = constants.STATUS_NO_INTERNET
@@ -67,6 +71,9 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             font = get_font(size=16, weight=62, bold=True)
             self.change_background_color(constants.background_color_yellow)
             self.upper_widget_label.setFont(font)
+            self.bottom_widget_label.setText(
+                constants.LABEL_NOTIFICATION_TEXT['new_updates_available'])
+            self.installUpdates.show()
         self._app_status = val
         status_text = constants.STATUS_TEXT[val]
         self.tray_icon.show_notification.setText(status_text)
@@ -86,22 +93,25 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             urlopen(config.api_base_url,
                     timeout=config.timeout_internet_connection)
             logging.debug('Connected to the internet')
-            return False
+            return True
         except URLError as err:
             logging.debug('No internet connection')
             return False
 
     def change_background_color(self, color):
-        # TODO: MUST BE IMPLEMENTED PROPERLY!
-        print(color)
         self.background_widget.setStyleSheet(
             "QWidget #background_widget{background-color: %s}" % color)
+
+    def hide_install_updates(self):
+        self.bottom_widget_label.setText("")
+        self.installUpdates.hide()
 
     def setup_app(self):
         logging.debug('Setting up UI application...')
         self.setupUi(self)
-        logging.debug('Setting default date time for timers')
         self.setWindowIcon(QIcon(config.app_icon_path))
+        self.hide_install_updates()
+        logging.debug('Setting default date time for timers')
         self.action_after_time.setTime(QTime(
             *config.action_after_time_default))
         self.action_after_time.setMinimumTime(QTime(
