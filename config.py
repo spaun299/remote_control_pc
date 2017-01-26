@@ -8,3 +8,4 @@ logger_backup_count = 3
 logger_max_bytes = 1024 * 512
 web_site = 'http://google.com'
 api_base_url = 'http://google.com'
+app_icon_path = "app/static/icon.png"

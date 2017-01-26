@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QMainWindow
 from .callbacks_events import Callback
 from PyQt5.QtCore import pyqtSignal, QTime
+from PyQt5.QtGui import QIcon
 import config
 import datetime
 from utils import shelve_get, seconds_from_datetime, shelve_save, \
@@ -98,6 +99,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
         logging.debug('Setting up UI application...')
         self.setupUi(self)
         logging.debug('Setting default date time for timers')
+        self.setWindowIcon(QIcon(config.app_icon_path))
         self.action_after_time.setTime(QTime(
             *config.action_after_time_default))
         self.action_after_time.setMinimumTime(QTime(

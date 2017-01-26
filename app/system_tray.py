@@ -14,7 +14,7 @@ class SystemTray(QSystemTrayIcon):
 
     def __init__(self, parent=None):
         self.parent = parent
-        self.icon = QtGui.QIcon("app/static/icon.png")
+        self.icon = QtGui.QIcon(config.app_icon_path)
         QSystemTrayIcon.__init__(self, self.icon, parent)
         menu = QMenu(parent)
         self.show_notification = QAction(self.parent)
