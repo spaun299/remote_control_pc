@@ -75,7 +75,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def check_for_new_updates(self):
         # TODO: MUST BE IMPLEMENTED
         logging.debug('Checking for new updates')
-        return True
+        return False
 
     @staticmethod
     def check_internet_connection():

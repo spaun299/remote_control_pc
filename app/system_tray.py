@@ -20,10 +20,12 @@ class SystemTray(QSystemTrayIcon):
         self.show_notification = QAction(self.parent)
         self.show_notification.setDisabled(True)
         self.show_notification.setObjectName(constants.NOTIFICATION_TRAY)
-        menu.setStyleSheet("")
         menu.addAction(self.show_notification)
         menu.addSeparator()
-        menu.addAction(config.applicatin_show_name, self.show_main_window)
+        app_open_action = QAction(QtGui.QIcon(config.app_icon_path),
+                                  config.applicatin_show_name,
+                                  self.parent, triggered=self.show_main_window)
+        menu.addAction(app_open_action)
         menu.addSeparator()
         menu.addAction('WWW', self.parent.open_web_site)
         menu.addSeparator()
