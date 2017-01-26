@@ -75,7 +75,7 @@ class MainWindow(QMainWindow, Ui_MainWindow):
     def check_for_new_updates(self):
         # TODO: MUST BE IMPLEMENTED
         logging.debug('Checking for new updates')
-        return False
+        return True
 
     @staticmethod
     def check_internet_connection():
@@ -83,17 +83,19 @@ class MainWindow(QMainWindow, Ui_MainWindow):
             :return True if OK, and False if no IC """
         logging.debug('Checking internet connection')
         try:
-            urlopen(config.api_base_url, timeout=1)
+            urlopen(config.api_base_url,
+                    timeout=config.timeout_internet_connection)
             logging.debug('Connected to the internet')
-            return True
+            return False
         except URLError as err:
             logging.debug('No internet connection')
             return False
 
     def change_background_color(self, color):
         # TODO: MUST BE IMPLEMENTED PROPERLY!
+        print(color)
         self.background_widget.setStyleSheet(
-            "#background_widget{background-color: %s}" % color)
+            "QWidget #background_widget{background-color: %s}" % color)
 
     def setup_app(self):
         logging.debug('Setting up UI application...')

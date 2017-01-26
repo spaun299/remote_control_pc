@@ -71,5 +71,5 @@ background_color_yellow = "qlineargradient(spread:pad, x1:0.502, y1:0," \
                           "rgba(255, 255, 255, 255))"
 background_color_red = "qlineargradient(spread:pad, x1:0.502, y1:0," \
                        " x2:0.507, y2:1, stop:0.444976 " \
-                       "rgba(27, 188, 155, 255), stop:1 " \
+                       "rgba(242, 38, 19, 1), stop:1 " \
                        "rgba(255, 255, 255, 255))"
