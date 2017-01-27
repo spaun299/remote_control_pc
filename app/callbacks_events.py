@@ -38,8 +38,8 @@ class Callback(pc_controller.PcController, metaclass=Singleton):
             self.on_click_faq)
         self.widget.action_website.triggered.connect(
             self.on_click_website)
-        self.widget.action_license.triggered.connect(
-            self.on_click_license)
+        # self.widget.action_license.triggered.connect(
+        #     self.on_click_license)
         self.widget.action_contact_us.triggered.connect(
             self.on_click_contact_us)
         self.widget.action_show_all_pc.triggered.connect(
